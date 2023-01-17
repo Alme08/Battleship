@@ -46,12 +46,12 @@ const GameboardFactory = () => {
   };
 
   const receiveAttack = (x, y) => {
-    if (board[x][y] === 'miss') return false;
-    if (typeof board[x][y] === 'object' && board[x][y].ship.tiles[board[x][y].shipPosition] === 'hit') return false;
     if (board[x][y] === null) {
       board[x][y] = 'miss';
       return board[x][y];
     }
+    if (board[x][y] === 'miss') return false;
+    if (typeof board[x][y] === 'object' && board[x][y].ship.tiles[board[x][y].shipPosition] === 'hit') return false;
     board[x][y].ship.hit(board[x][y].shipPosition);
     return board[x][y].ship.tiles[board[x][y].shipPosition];
   };
