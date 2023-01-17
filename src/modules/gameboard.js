@@ -14,7 +14,7 @@ const GameboardFactory = () => {
     [null, null, null, null, null, null, null, null, null, null]];
 
   const placeShip = (x, y, length, dir) => {
-    if (board[x][y] === null) return false;
+    if (board[x][y] !== null) return false;
     const ship = new ShipFactory(length);
     let shipPosition = 0;
 
@@ -22,7 +22,7 @@ const GameboardFactory = () => {
       if (y + ship.getLength() > 10) return false;
 
       for (let i = 0; i < ship.getLength(); i += 1) {
-        if (board[x][y + i] === null) return false;
+        if (board[x][y + i] !== null) return false;
       }
 
       for (let i = y; i < y + ship.getLength(); i += 1) {
@@ -33,7 +33,7 @@ const GameboardFactory = () => {
       if (x + ship.getLength() > 10) return false;
 
       for (let i = 0; i < ship.getLength(); i += 1) {
-        if (board[x + i][y] === null) return false;
+        if (board[x + i][y] !== null) return false;
       }
 
       for (let i = x; i < x + ship.getLength(); i += 1) {
@@ -41,7 +41,10 @@ const GameboardFactory = () => {
         shipPosition += 1;
       }
     }
+
+    return true;
   };
+
   return { board, placeShip };
 };
 
