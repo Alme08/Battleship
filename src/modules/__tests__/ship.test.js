@@ -6,13 +6,13 @@ test('has length property', () => {
 });
 test('hits the ship', () => {
   const ship = new ShipFactory(3);
-  ship.hit();
-  expect(ship.getHits()).toBe(1);
+  ship.hit(0);
+  expect(ship.tiles[0]).toBe('hit');
 });
 test('sinks the ship', () => {
   const ship = new ShipFactory(3);
-  ship.hit();
-  ship.hit();
-  ship.hit();
+  ship.hit(0);
+  ship.hit(1);
+  ship.hit(2);
   expect(ship.isSunk()).toBeTruthy();
 });
