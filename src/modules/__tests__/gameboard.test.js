@@ -43,3 +43,20 @@ test('Rejects vertical ship that goes over the edge', () => {
   const g = new GameboardFactory();
   expect(g.placeShip(7, 0, 4, 'v')).toBe(false);
 });
+
+// receive attack
+
+test('hit ship return position with "hit" ', () => {
+  const g = new GameboardFactory();
+  g.placeShip(0, 0, 5, 'h');
+  expect(g.receiveAttack(0, 0)).toBe('hit');
+});
+
+test('2x hit ship return position with hit', () => {
+  const g = new GameboardFactory();
+  g.placeShip(0, 0, 5, 'v');
+  g.receiveAttack(0, 0);
+  g.receiveAttack(4, 0);
+  expect(g.board[0][0].ship.tiles[g.board[0][0].shipPosition]
+    && g.board[4][0].ship.tiles[g.board[0][0].shipPosition]).toBe('hit');
+});
