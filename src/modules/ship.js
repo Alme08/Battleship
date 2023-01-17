@@ -3,14 +3,14 @@ const ShipFactory = (length) => {
   const hit = (tile) => {
     tiles.splice(tile, 1, 'hit');
   };
-  // const getHits = () => hits;
   const getLength = () => length;
   const isSunk = () => {
+    let sunk = true;
     tiles.forEach((tile) => {
-      if (tile !== 'hit') return false;
+      if (tile !== 'hit') sunk = false;
       return null;
     });
-    return true;
+    return sunk;
   };
 
   return {
