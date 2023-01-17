@@ -56,7 +56,26 @@ const GameboardFactory = () => {
     return board[x][y].ship.tiles[board[x][y].shipPosition];
   };
 
-  return { board, placeShip, receiveAttack };
+  const isSunk = (x, y) => {
+    if (typeof board[x][x] !== 'object') return false;
+    return board[x][y].ship.isSunk();
+  };
+
+  const areAllSunk = () => {
+    let sunk = true;
+
+    for (let i = 0; i < board.length; i += 1) {
+      for (let j = 0; j < board[i].length; j += 1) {
+        if (board[i][j] !== null && board[i][j] !== 'miss') {
+          if (board[i][j].ship.isSunk() !== true) sunk = false;
+        }
+      }
+    }
+    return { sunk };
+  };
+  return {
+    board, placeShip, receiveAttack, isSunk, areAllSunk,
+  };
 };
 
 export default GameboardFactory;
