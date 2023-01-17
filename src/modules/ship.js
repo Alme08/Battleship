@@ -1,15 +1,20 @@
 const ShipFactory = (length) => {
-  let hits = 0;
-  const hit = () => { hits += 1; };
-  const getHits = () => hits;
+  const tiles = [...Array(length).keys()];
+  const hit = (tile) => {
+    tiles.splice(tile, 1, 'hit');
+  };
+  // const getHits = () => hits;
   const getLength = () => length;
   const isSunk = () => {
-    if (length > hits) return false;
+    tiles.forEach((tile) => {
+      if (tile !== 'hit') return false;
+      return null;
+    });
     return true;
   };
 
   return {
-    getLength, hit, getHits, isSunk,
+    getLength, hit, isSunk, tiles,
   };
 };
 
