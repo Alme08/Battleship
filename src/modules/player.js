@@ -1,30 +1,33 @@
-import GameboardFactory from './gameboard';
+import GameboardFactory from './gameboard.js';
 
-const Player = () => {
-  const gameboard = new GameboardFactory();
-  let turn = false;
+class Player {
+  constructor() {
+    this.gameboard = new GameboardFactory();
+    this.turn = false;
+  }
 
-  const changeTurn = () => {
-    turn = !turn;
+  changeTurn = () => {
+    this.turn = !this.turn;
   };
-  const getTurn = () => turn;
 
-  const attack = (enemy, x, y) => {
+  getTurn = () => this.turn;
+
+  attack = (enemy, x, y) => {
     enemy.gameboard.receiveAttack(x, y);
-    changeTurn();
+    this.changeTurn();
     enemy.changeTurn();
     return enemy.gameboard.board[x][y];
   };
 
-  const randomAttack = (enemy) => {
+  randomAttack = (enemy) => {
     const x = Math.floor(Math.random() * 10);
     const y = Math.floor(Math.random() * 10);
-    return attack(enemy, x, y);
+    return this.attack(enemy, x, y);
   };
 
-  return {
-    gameboard, changeTurn, getTurn, attack, randomAttack,
-  };
-};
+  // return {
+  //   gameboard, changeTurn, getTurn, attack, randomAttack,
+  // };
+}
 
 export default Player;
