@@ -50,7 +50,7 @@ body {
 	padding: 0 20px;
 	font-size: 20px;
 }
-.start-screen form button {
+.start-screen form .button {
 	padding: 20px 30px;
 	font-size: 20px;
 	border: none;
@@ -66,4 +66,8 @@ footer {
 	text-align: center;
 	color: #fff;
 	padding: 20px;
+}
+
+.display-none {
+	display: none;
 }

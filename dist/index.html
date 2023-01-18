@@ -9,12 +9,25 @@
 	<body>
 		<section class="start-screen">
 			<h1>BATTLESHIP</h1>
-			<form action="#">
+			<form action="#" id="form">
 				<label for="playerName">Enter player name:</label>
 				<input type="text" id="playerName" />
-				<button>START</button>
+				<!-- <button id="button">START</button> -->
+				<input class="button" id="button" type="submit" value="START" />
 			</form>
 		</section>
+
+		<main class="game-screen display-none">
+			<div>
+				<h2>your board</h2>
+				<div></div>
+			</div>
+			<div>
+				<h2>enemy board</h2>
+				<div></div>
+			</div>
+		</main>
+
 		<footer>
 			<p>bla bla bla</p>
 		</footer>
