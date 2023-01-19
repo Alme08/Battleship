@@ -73,7 +73,7 @@ class GameboardFactory {
         }
       }
     }
-    return { sunk };
+    return sunk;
   };
   // return {
   //   board, placeShip, receiveAttack, isSunk, areAllSunk,
