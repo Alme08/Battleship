@@ -13,16 +13,23 @@ class Player {
   getTurn = () => this.turn;
 
   attack = (enemy, x, y) => {
-    enemy.gameboard.receiveAttack(x, y);
     this.changeTurn();
     enemy.changeTurn();
-    return enemy.gameboard.board[x][y];
+    return enemy.gameboard.receiveAttack(x, y);
   };
 
   randomAttack = (enemy) => {
-    const x = Math.floor(Math.random() * 10);
-    const y = Math.floor(Math.random() * 10);
-    return this.attack(enemy, x, y);
+    let check = false;
+    do {
+      console.log('cheking');
+      const x = Math.floor(Math.random() * 10);
+      const y = Math.floor(Math.random() * 10);
+      if (enemy.gameboard.board[x][y] !== 'miss'
+      && enemy.gameboard.board[x][y]?.ship.tiles[enemy.gameboard.board[x][y].shipPosition] !== 'hit') {
+        check = this.attack(enemy, x, y);
+      }
+    } while (check === false);
+    return check;
   };
 
   // return {
