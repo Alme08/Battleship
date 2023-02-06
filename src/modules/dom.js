@@ -29,12 +29,14 @@ const renderBoards = () => {
       return;
     }
 
-    players.pc.randomAttack(players.human);
-    renderBoards();
+    setTimeout(() => {
+      players.pc.randomAttack(players.human);
+      renderBoards();
 
-    if (typeof checkPlayerWon(players) === 'object') {
-      renderEndScreen(checkPlayerWon(players));
-    }
+      if (typeof checkPlayerWon(players) === 'object') {
+        renderEndScreen(checkPlayerWon(players));
+      }
+    }, 500);
   }
 
   for (let i = 0; i < players.human.gameboard.board.length; i += 1) {
@@ -52,6 +54,13 @@ const renderBoards = () => {
         const divHit = document.createElement('div');
         divHit.classList.add('hit');
         div.appendChild(divHit);
+      }
+
+      if (players.human.gameboard.board[i][j] !== null
+      && players.human.gameboard?.isSunk(i, j) === true) {
+        const divSunk = document.createElement('div');
+        divSunk.classList.add('sunk');
+        div.appendChild(divSunk);
       }
       board.appendChild(div);
     }
@@ -71,6 +80,11 @@ const renderBoards = () => {
         const divHit = document.createElement('div');
         divHit.classList.add('hit');
         div.appendChild(divHit);
+      }
+
+      if (players.pc.gameboard.board[i][j] !== null
+      && players.pc.gameboard.isSunk(i, j) === true) {
+        div.classList.add('sunk');
       }
       if (!div.hasChildNodes()) {
         div.addEventListener('click', attack);
