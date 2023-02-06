@@ -1,9 +1,10 @@
 import GameboardFactory from './gameboard.js';
 
 class Player {
-  constructor() {
+  constructor(name) {
     this.gameboard = new GameboardFactory();
     this.turn = false;
+    this.name = name;
   }
 
   changeTurn = () => {
