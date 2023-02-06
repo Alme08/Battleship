@@ -59,7 +59,7 @@ class GameboardFactory {
   };
 
   isSunk = (x, y) => {
-    if (typeof this.board[x][x] !== 'object') return false;
+    if (typeof this.board[x][y] !== 'object') return false;
     return this.board[x][y].ship.isSunk();
   };
 
