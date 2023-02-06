@@ -110,6 +110,30 @@ body {
 .hit {
 	background-color: rgb(255, 0, 0);
 }
+
+/* END SCREEN */
+.end-screen {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-color: #001928dd;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 20px;
+}
+.end-screen > h2 {
+	color: #fff;
+	text-transform: uppercase;
+}
+.end-screen > button {
+	padding: 20px 30px;
+	font-size: 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
 /* FOOTER */
 footer {
 	background-color: rgb(1, 34, 62);
