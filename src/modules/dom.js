@@ -3,7 +3,15 @@ import { game, checkPlayerWon } from './game.js';
 const form = document.querySelector('#form');
 const startScreen = document.querySelector('.start-screen');
 const gameScreen = document.querySelector('.game-screen');
+const endScreen = document.querySelector('.end-screen');
+const restartGame = document.querySelector('#restart');
 let players = null;
+
+const renderEndScreen = (winner) => {
+  const winnerSpan = document.querySelector('#winner');
+  endScreen.classList.remove('display-none');
+  winnerSpan.textContent = winner.name;
+};
 
 const renderBoards = () => {
   const board = document.querySelector('#board');
@@ -15,12 +23,18 @@ const renderBoards = () => {
     if (!players.human.getTurn()) return;
     players.human.attack(players.pc, e.target.dataset.x, e.target.dataset.y);
     renderBoards();
+
     if (typeof checkPlayerWon(players) === 'object') {
-      console.log(checkPlayerWon(players), 'won');
+      renderEndScreen(checkPlayerWon(players));
+      return;
     }
+
     players.pc.randomAttack(players.human);
     renderBoards();
-    // console.log(checkPlayerWon(players));
+
+    if (typeof checkPlayerWon(players) === 'object') {
+      renderEndScreen(checkPlayerWon(players));
+    }
   }
 
   for (let i = 0; i < players.human.gameboard.board.length; i += 1) {
@@ -68,8 +82,17 @@ const renderBoards = () => {
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
+  const playerName = document.querySelector('#playerName');
   startScreen.classList.add('display-none');
-  players = game();
+  players = game(playerName.value);
   renderBoards();
   gameScreen.classList.remove('display-none');
+});
+
+restartGame.addEventListener('click', () => {
+  startScreen.classList.remove('display-none');
+  const playerName = document.querySelector('#playerName');
+  playerName.value = '';
+  gameScreen.classList.add('display-none');
+  endScreen.classList.add('display-none');
 });
