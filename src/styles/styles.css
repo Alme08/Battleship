@@ -110,6 +110,9 @@ body {
 .hit {
 	background-color: rgb(255, 0, 0);
 }
+.game-screen > div > div > .sunk {
+	background-color: red;
+}
 
 /* END SCREEN */
 .end-screen {
