@@ -89,7 +89,7 @@ body {
 	gap: 2.5px;
 }
 .game-screen > div > div > div {
-	background-color: #fff;
+	background-color: rgb(114, 194, 255);
 }
 .game-screen > div > #enemyBoard > div {
 	cursor: pointer;
