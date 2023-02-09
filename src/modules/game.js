@@ -3,7 +3,7 @@ import Player from './player.js';
 function game(name) {
   const human = new Player(name);
   const pc = new Player('Pc');
-  pc.gameboard.placeShip(0, 0, 9, 'h');
+  pc.gameboard.placeShip(0, 0, 1, 'h');
   human.changeTurn();
   return {
     human,
