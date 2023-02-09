@@ -20,13 +20,12 @@ function renderPlayerFleet(player) {
 }
 
 const shipDrag = (shipName, players) => {
-  const body = document.querySelector('body');
   const ship = document.querySelector(shipName);
   const shipsContainer = document.querySelector('.ships');
   const startGame = document.querySelector('#start-game');
   const cells = document.querySelectorAll('#boardCarrier > div');
   const child = document.querySelectorAll(`${shipName} > div`);
-  let dragSelection;
+  let dragSelection = null;
   let offset;
   let dir = 'v';
 
@@ -98,9 +97,10 @@ const shipDrag = (shipName, players) => {
         return;
       }
     }
+    e.target.classList.add('display-none');
     renderPlayerFleet(players.human); // renders fleet
 
-    // render start game button when all ships are in the cells
+    // renders start game button when all ships are in the cells
     let display = true;
     for (let i = 0; i < shipsContainer.children.length; i += 1) {
       if (!shipsContainer.children[i].classList.contains('display-none')) {
@@ -120,19 +120,16 @@ const shipDrag = (shipName, players) => {
   });
   cells.forEach((e) => {
     e.addEventListener('dragleave', (event) => {
-      // event.preventDefault();
       event.target.classList.remove('drag-over');
+      // removes index if drop outside of cells
+      dragSelection = -1;
     });
   });
+
   cells.forEach((e) => {
     e.addEventListener('drop', (event) => {
-      // event.preventDefault();
       event.target.classList.remove('drag-over');
     });
-  });
-  // removes index if drop outside of cells
-  body.addEventListener('dragenter', () => {
-    dragSelection = -1;
   });
 
   ship.addEventListener('click', (e) => {
