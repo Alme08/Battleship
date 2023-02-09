@@ -1,4 +1,5 @@
 import { game, checkPlayerWon } from './game.js';
+import shipDrag from './drag-and-drop.js';
 
 const form = document.querySelector('#form');
 const startScreen = document.querySelector('.start-screen');
@@ -109,140 +110,15 @@ const renderCarrierShipBoard = () => {
   }
 };
 
-function renderPlayerFleet(player) {
-  document.querySelectorAll('#boardCarrier > div').forEach((e, i) => {
-    let pos1;
-    let pos2;
-    let pos = `${i}`;
-
-    // transform index string to array of pos1 and pos2
-    if (i < 10) {
-      pos1 = 0;
-      pos2 = i;
-    } else {
-      pos = pos.split('');
-      pos1 = pos[0];
-      pos2 = pos[1];
-    }
-
-    if (!player.gameboard.board[pos1][pos2]) return;
-    e.classList.add('fleet');
-  });
-}
-
-const shipDrag = (shipName) => {
-  const body = document.querySelector('body');
-  const ship = document.querySelector(shipName);
-  const cells = document.querySelectorAll('#boardCarrier > div');
-  const child = document.querySelectorAll(`${shipName} > div`);
-  let dragSelection;
-  let offset;
-  let dir = 'v';
-
-  console.log(ship, child);
-  // offset for ship selection
-  if (child[0]) {
-    child[0].addEventListener('mouseenter', () => {
-      console.log('0');
-      offset = 0;
-    });
-  }
-  if (child[1]) {
-    child[1].addEventListener('mouseenter', () => {
-      console.log('1');
-      offset = -1;
-    });
-  }
-  if (child[2]) {
-    child[2].addEventListener('mouseenter', () => {
-      console.log('2');
-      offset = -2;
-    });
-  }
-  if (child[3]) {
-    child[3].addEventListener('mouseenter', () => {
-      console.log('3');
-      offset = -3;
-    });
-  }
-
-  ship.addEventListener('dragstart', (e) => {
-    e.dataTransfer.setData('text/plain', e.target.id);
-    setTimeout(() => {
-      e.target.classList.add('display-none');
-    }, 0);
-  });
-
-  ship.addEventListener('dragend', (e, i) => {
-    if (dragSelection === -1) {
-      e.target.classList.remove('display-none');
-      return; // prevents offset error
-    }
-    let pos1;
-    let pos2;
-    let pos = `${dragSelection}`;
-
-    // transform index string to array of pos1 and pos2
-    if (dragSelection < 10) {
-      pos1 = 0;
-      pos2 = dragSelection;
-    } else {
-      pos = pos.split('');
-      pos1 = pos[0] * 1;
-      pos2 = pos[1] * 1;
-    }
-
-    // place ships with proper offset
-    if (dir === 'h') pos2 += offset;
-    if (dir === 'v') pos1 += offset;
-    if (pos2 < 0) return;
-    if (shipName === '.ship-1') { if (players.human.gameboard.placeShip(pos1, pos2, 1, dir) === false) return; }
-    if (shipName === '.ship-2') { if (players.human.gameboard.placeShip(pos1, pos2, 2, dir) === false) return; }
-    if (shipName === '.ship-3') { if (players.human.gameboard.placeShip(pos1, pos2, 3, dir) === false) return; }
-    if (shipName === '.ship-4') { if (players.human.gameboard.placeShip(pos1, pos2, 4, dir) === false) return; }
-    console.log(dir, players.human.gameboard.board);
-    renderPlayerFleet(players.human); // renders fleet
-  });
-
-  // event listeners for drag on cells
-  cells.forEach((e, i) => {
-    e.addEventListener('dragover', (event) => {
-      event.preventDefault();
-      event.target.classList.add('drag-over');
-      dragSelection = i;
-    });
-  });
-  cells.forEach((e) => {
-    e.addEventListener('dragleave', (event) => {
-      // event.preventDefault();
-      event.target.classList.remove('drag-over');
-    });
-  });
-  // removes index if drop outside of cells
-  body.addEventListener('dragenter', () => {
-    dragSelection = -1;
-  });
-
-  ship.addEventListener('click', (e) => {
-    if (dir === 'h') {
-      dir = 'v';
-      e.target.parentNode.classList.toggle('rotated');
-    } else {
-      dir = 'h';
-      e.target.parentNode.classList.toggle('rotated');
-    }
-  });
-};
-
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const playerName = document.querySelector('#playerName');
   startScreen.classList.add('display-none');
   renderCarrierShipBoard();
   shipsScreen.classList.remove('display-none');
-  shipDrag('.ship-4');
-  shipDrag('.ship-3');
   players = game(playerName.value);
+  shipDrag('.ship-4', players);
+  shipDrag('.ship-3', players);
   // renderBoards();
   // gameScreen.classList.remove('display-none');
 });
