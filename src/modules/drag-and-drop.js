@@ -1,4 +1,5 @@
 function renderPlayerFleet(player) {
+  console.log(player.gameboard.board);
   document.querySelectorAll('#boardCarrier > div').forEach((e, i) => {
     let pos1;
     let pos2;
@@ -22,6 +23,8 @@ function renderPlayerFleet(player) {
 const shipDrag = (shipName, players) => {
   const body = document.querySelector('body');
   const ship = document.querySelector(shipName);
+  const shipsContainer = document.querySelector('.ships');
+  const startGame = document.querySelector('#start-game');
   const cells = document.querySelectorAll('#boardCarrier > div');
   const child = document.querySelectorAll(`${shipName} > div`);
   let dragSelection;
@@ -49,7 +52,7 @@ const shipDrag = (shipName, players) => {
     }, 0);
   });
 
-  ship.addEventListener('dragend', (e, i) => {
+  ship.addEventListener('dragend', (e) => {
     if (dragSelection === -1) {
       e.target.classList.remove('display-none');
       return; // prevents offset error
@@ -90,13 +93,22 @@ const shipDrag = (shipName, players) => {
         return;
       }
     }
-    if (shipName === '.ship-4') {
+    if (shipName === '.ship-4' || shipName === '.ship-4-2') {
       if (players.human.gameboard.placeShip(pos1, pos2, 4, dir) === false) {
         e.target.classList.remove('display-none');
         return;
       }
     }
     renderPlayerFleet(players.human); // renders fleet
+
+    // render start game button when all ships are in the cells
+    let display = true;
+    for (let i = 0; i < shipsContainer.children.length; i += 1) {
+      if (!shipsContainer.children[i].classList.contains('display-none')) {
+        display = false;
+      }
+    }
+    if (display === true) startGame.classList.remove('display-none');
   });
 
   // event listeners for drag on cells
