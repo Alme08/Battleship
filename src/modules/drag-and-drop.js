@@ -1,5 +1,4 @@
 function renderPlayerFleet(player) {
-  console.log(player.gameboard.board);
   document.querySelectorAll('#boardCarrier > div').forEach((e, i) => {
     let pos1;
     let pos2;
