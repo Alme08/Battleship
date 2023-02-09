@@ -3,7 +3,7 @@ import Player from './player.js';
 function game(name) {
   const human = new Player(name);
   const pc = new Player('Pc');
-  pc.gameboard.placeShip(0, 0, 1, 'h');
+  pc.randomFleet();
   human.changeTurn();
   return {
     human,
