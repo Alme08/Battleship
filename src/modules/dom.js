@@ -6,6 +6,7 @@ const startScreen = document.querySelector('.start-screen');
 const shipsScreen = document.querySelector('.ships-screen');
 const gameScreen = document.querySelector('.game-screen');
 const endScreen = document.querySelector('.end-screen');
+const startGame = document.querySelector('#start-game');
 const restartGame = document.querySelector('#restart');
 let players = null;
 
@@ -60,9 +61,7 @@ const renderBoards = () => {
 
       if (players.human.gameboard.board[i][j] !== null
       && players.human.gameboard?.isSunk(i, j) === true) {
-        const divSunk = document.createElement('div');
-        divSunk.classList.add('sunk');
-        div.appendChild(divSunk);
+        div.classList.add('sunk');
       }
       board.appendChild(div);
     }
@@ -118,9 +117,16 @@ form.addEventListener('submit', (e) => {
   shipsScreen.classList.remove('display-none');
   players = game(playerName.value);
   shipDrag('.ship-4', players);
+  shipDrag('.ship-4-2', players);
   shipDrag('.ship-3', players);
-  // renderBoards();
-  // gameScreen.classList.remove('display-none');
+  shipDrag('.ship-2', players);
+  shipDrag('.ship-1', players);
+});
+
+startGame.addEventListener('click', () => {
+  shipsScreen.classList.add('display-none');
+  renderBoards();
+  gameScreen.classList.remove('display-none');
 });
 
 restartGame.addEventListener('click', () => {
