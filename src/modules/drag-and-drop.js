@@ -10,8 +10,8 @@ function renderPlayerFleet(player) {
       pos2 = i;
     } else {
       pos = pos.split('');
-      pos1 = pos[0];
-      pos2 = pos[1];
+      [pos1] = pos;
+      [, pos2] = pos;
     }
 
     if (!player.gameboard.board[pos1][pos2]) return;
