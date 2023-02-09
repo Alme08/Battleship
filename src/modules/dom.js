@@ -1,12 +1,14 @@
+import { create } from 'lodash';
 import { game, checkPlayerWon } from './game.js';
 import shipDrag from './drag-and-drop.js';
 
 const form = document.querySelector('#form');
 const startScreen = document.querySelector('.start-screen');
 const shipsScreen = document.querySelector('.ships-screen');
+const shipsContainer = document.querySelector('.ships');
 const gameScreen = document.querySelector('.game-screen');
 const endScreen = document.querySelector('.end-screen');
-const startGame = document.querySelector('#start-game');
+let startGame = null;
 const restartGame = document.querySelector('#restart');
 let players = null;
 
@@ -97,6 +99,7 @@ const renderBoards = () => {
 
 const renderCarrierShipBoard = () => {
   const carrierBoard = document.querySelector('#boardCarrier');
+  carrierBoard.textContent = '';
 
   for (let i = 0; i < 10; i += 1) {
     for (let j = 0; j < 10; j += 1) {
@@ -107,26 +110,70 @@ const renderCarrierShipBoard = () => {
       carrierBoard.appendChild(div);
     }
   }
+  for (let i = 0; i < shipsContainer.children.length; i += 1) {
+    if (shipsContainer.children[i].classList.contains('ship')) {
+      shipsContainer.children[i].classList.remove('display-none');
+    }
+  }
+};
+
+const createShips = (cells) => {
+  if (cells === 42) {
+    const ship = document.createElement('div');
+    ship.classList.add('ship');
+    ship.classList.add('ship-4-2');
+    ship.setAttribute('id', 'ship-4-2');
+    ship.setAttribute('draggable', true);
+    for (let i = 0; i < 4; i += 1) {
+      const div = document.createElement('div');
+      div.classList.add('cell');
+      ship.appendChild(div);
+    }
+    shipsContainer.appendChild(ship);
+  } else {
+    const ship = document.createElement('div');
+    ship.classList.add('ship');
+    ship.classList.add(`ship-${cells}`);
+    ship.setAttribute('id', `ship-${cells}`);
+    ship.setAttribute('draggable', true);
+    for (let i = 0; i < cells; i += 1) {
+      const div = document.createElement('div');
+      div.classList.add('cell');
+      ship.appendChild(div);
+    }
+    shipsContainer.appendChild(ship);
+  }
 };
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const playerName = document.querySelector('#playerName');
   startScreen.classList.add('display-none');
-  renderCarrierShipBoard();
-  shipsScreen.classList.remove('display-none');
+
   players = game(playerName.value);
+  renderCarrierShipBoard();
+  shipsContainer.textContent = '';
+  createShips(4);
+  createShips(42);
+  createShips(3);
+  createShips(2);
+  createShips(1);
+  shipsContainer.innerHTML += `
+  <button id="start-game" class="display-none">start game</button>
+  `;
+  startGame = document.querySelector('#start-game');
   shipDrag('.ship-4', players);
   shipDrag('.ship-4-2', players);
   shipDrag('.ship-3', players);
   shipDrag('.ship-2', players);
   shipDrag('.ship-1', players);
-});
+  shipsScreen.classList.remove('display-none');
 
-startGame.addEventListener('click', () => {
-  shipsScreen.classList.add('display-none');
-  renderBoards();
-  gameScreen.classList.remove('display-none');
+  startGame.addEventListener('click', () => {
+    shipsScreen.classList.add('display-none');
+    renderBoards();
+    gameScreen.classList.remove('display-none');
+  });
 });
 
 restartGame.addEventListener('click', () => {
