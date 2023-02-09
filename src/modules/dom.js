@@ -1,4 +1,3 @@
-import { create } from 'lodash';
 import { game, checkPlayerWon } from './game.js';
 import shipDrag from './drag-and-drop.js';
 
