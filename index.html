@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Battleship</title>
+	</head>
+	<body>
+		<section class="start-screen">
+			<h1>BATTLESHIP</h1>
+			<form action="#" id="form">
+				<label for="playerName">Enter player name:</label>
+				<input type="text" id="playerName" />
+				<!-- <button id="button">START</button> -->
+				<input class="button" id="button" type="submit" value="START" />
+			</form>
+		</section>
+
+		<section class="ships-screen display-none">
+			<h2>Carrier your ships</h2>
+			<div id="boardCarrier"></div>
+			<div class="ships"></div>
+		</section>
+
+		<main class="game-screen display-none">
+			<div>
+				<h2>your board</h2>
+				<div id="board"></div>
+			</div>
+			<div>
+				<h2>enemy board</h2>
+				<div id="enemyBoard"></div>
+			</div>
+		</main>
+
+		<section class="end-screen display-none">
+			<h2><span id="winner">Player</span> won!</h2>
+			<button id="restart">Restart</button>
+		</section>
+
+		<footer>
+			<p>bla bla bla</p>
+		</footer>
+		<script src="main.js"></script>
+	</body>
+</html>
